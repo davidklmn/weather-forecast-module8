@@ -1,7 +1,4 @@
 //* When a user views the current weather conditions for that city they are presented with:
-let cityLat;
-let cityLon;
-let queryURL;
 // API key
 let apiKey = "92bb3d5ac67633cb5575c35bd3db54b4";
 
@@ -22,10 +19,9 @@ $("#search-button").on("click", function (e) {
     url: geoCoding,
     method: "GET",
   }).then(function (response) {
-    cityLat = response[0].lat.toFixed(2);
-    cityLon = response[0].lon.toFixed(2);
-    console.log(cityLat, cityLon);
-    queryURL =
+    let cityLat = response[0].lat.toFixed(2);
+    let cityLon = response[0].lon.toFixed(2);
+    let queryURL =
       "http://api.openweathermap.org/data/2.5/forecast?lat=" +
       cityLat +
       "&lon=" +
@@ -40,6 +36,7 @@ $("#search-button").on("click", function (e) {
       console.log(response);
       //   Today section
       let today = $("#today");
+      today.css("border", "1px solid black");
       // The city name
       let cityName = $("<h2>");
       cityName.text(response.city.name);
@@ -48,17 +45,30 @@ $("#search-button").on("click", function (e) {
       let currentDate = moment().format(" (D/M/YYYY)");
       cityName.append(currentDate);
       // An icon representation of weather conditions
-      let apiIcon = response.list[0].weather.icon;
-      let weatherIcon = $("<img");
+      let apiIcon = response.list[0].weather[0].icon;
+      let weatherIcon = $("<img>");
+      weatherIcon.css("display", "inline");
       weatherIcon.attr(
         "src",
         "http://openweathermap.org/img/wn/" + apiIcon + ".png"
       );
-      console.log(weatherIcon);
-      today.append(weatherIcon);
+      cityName.append(weatherIcon);
       // The temperature
+      let temp = $("<p>");
+      temp.text(
+        "Temp: " +
+          (((response.list[0].main.temp - 32) * 5) / 9).toFixed(2) +
+          " °C"
+      );
+      today.append(temp);
       // The humidity
+      let hum = $("<p>");
+      hum.text("Humidity: " + response.list[0].main.humidity + " %");
+      today.append(hum);
       // The wind speed
+      let wind = $("<p>");
+      wind.text("Wind: " + response.list[0].wind.speed);
+      today.append(wind);
     });
   });
 });
