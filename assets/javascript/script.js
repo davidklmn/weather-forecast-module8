@@ -8,7 +8,7 @@ $("#search-button").on("click", function (e) {
   let searchedCity = $("#search-input").val();
   // * geocoding API
   let geoCoding =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     searchedCity +
     "&appid=" +
     apiKey;
@@ -22,7 +22,7 @@ $("#search-button").on("click", function (e) {
     let cityLon = response[0].lon.toFixed(2);
     // ! Weather API
     let queryURL =
-      "http://api.openweathermap.org/data/2.5/forecast?lat=" +
+      "https://api.openweathermap.org/data/2.5/forecast?lat=" +
       cityLat +
       "&lon=" +
       cityLon +
@@ -53,7 +53,7 @@ $("#search-button").on("click", function (e) {
       weatherIcon.css("display", "inline");
       weatherIcon.attr(
         "src",
-        "http://openweathermap.org/img/wn/" + apiIcon + ".png"
+        "https://openweathermap.org/img/wn/" + apiIcon + ".png"
       );
       cityName.append(weatherIcon);
       // * The temperature
@@ -99,7 +99,7 @@ $("#search-button").on("click", function (e) {
         weatherIcon.css("display", "inline");
         weatherIcon.attr(
           "src",
-          "http://openweathermap.org/img/wn/" + apiIcon + ".png"
+          "https://openweathermap.org/img/wn/" + apiIcon + ".png"
         );
         forecastDayContainer.append(weatherIcon);
         // * The temperature
