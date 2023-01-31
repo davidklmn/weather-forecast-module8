@@ -27,7 +27,8 @@ $("#search-button").on("click", function (e) {
       "&lon=" +
       cityLon +
       "&appid=" +
-      apiKey;
+      apiKey +
+      "&units=metric";
     // * Weather AJAX function
     $.ajax({
       url: queryURL,
@@ -57,9 +58,7 @@ $("#search-button").on("click", function (e) {
       cityName.append(weatherIcon);
       // * The temperature
       let temp = $("<p>");
-      temp.text(
-        "Temp: " + (response.list[0].main.temp - 273.15).toFixed(2) + " °C"
-      );
+      temp.text("Temp: " + response.list[0].main.temp.toFixed(2) + " °C");
       today.append(temp);
       // * The humidity
       let hum = $("<p>");
@@ -70,20 +69,26 @@ $("#search-button").on("click", function (e) {
       wind.text("Wind: " + response.list[0].wind.speed);
       today.append(wind);
 
-      //* When a user views future weather conditions for that city they are presented with a 5-day forecast that displays:
+      // ? When a user views future weather conditions for that city they are presented with a 5-day forecast that displays:
       // ! Forecast section
+      let forecast = $("#forecast");
+      let forecastContainer = $("<div>");
+      let forecastTitle = $("<h3>");
+      forecastContainer.css("padding", "15px");
+      forecastTitle.text("5-Day Forecast");
+      forecastContainer.append(forecastTitle);
       for (let i = 0; i < 6; i++) {
-        let forecast = $("#forecast");
-        // The date
+        // * The date
         let forecastDate;
-        // An icon representation of weather conditions
-        // The temperature
-        // The humidity
+        // * An icon representation of weather conditions
+        // * The temperature
+        // * The humidity
+        forecast.append(forecastContainer);
       }
     });
   });
 });
 
-//* When a user clicks on a city in the search history they are again presented with current and future conditions for that city.
+//? When a user clicks on a city in the search history they are again presented with current and future conditions for that city.
 
-//* When a user searches for a city they are presented with current and future conditions for that city and that city is added to the search history.
+//? When a user searches for a city they are presented with current and future conditions for that city and that city is added to the search history.
