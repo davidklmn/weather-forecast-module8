@@ -116,6 +116,13 @@ $("#search-button").on("click", function (e) {
         forecastDayContainer.append(wind);
 
         // Formatting the containers
+        forecastDayContainer
+          .css("display", "inline-block")
+          .css("width", "400px")
+          .css("background-color", "#2D3E50")
+          .css("color", "white")
+          .css("margin-right", "25px");
+        forecastDayContainer.attr("class", "col-lg-2");
         // Pushing everything into the daily containers
         forecastContainer.append(forecastDayContainer);
         forecast.append(forecastContainer);
