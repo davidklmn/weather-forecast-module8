@@ -71,24 +71,61 @@ $("#search-button").on("click", function (e) {
 
       // ? When a user views future weather conditions for that city they are presented with a 5-day forecast that displays:
       // ! Forecast section
+      // Variables
       let forecast = $("#forecast");
       let forecastContainer = $("<div>");
       let forecastTitle = $("<h3>");
+      // Empty the forecast container after a new search
+      forecast.empty();
       forecastContainer.css("padding", "15px");
       forecastTitle.text("5-Day Forecast");
       forecastContainer.append(forecastTitle);
-      for (let i = 0; i < 6; i++) {
+
+      for (let i = 7; i < 40; i += 8) {
+        // Forecast day container
+        let forecastDayContainer = $("<div>");
         // * The date
-        let forecastDate;
+        let forecastDateContainer = $("<h4>");
+        let forecastDate = moment(
+          response.list[i].dt_txt,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format("D/M/YYYY");
+        forecastDateContainer.css("font-size", "1.25rem");
+        forecastDateContainer.append(forecastDate);
+        forecastDayContainer.append(forecastDateContainer);
         // * An icon representation of weather conditions
+        let apiIcon = response.list[i].weather[0].icon;
+        let weatherIcon = $("<img>");
+        weatherIcon.css("display", "inline");
+        weatherIcon.attr(
+          "src",
+          "http://openweathermap.org/img/wn/" + apiIcon + ".png"
+        );
+        forecastDayContainer.append(weatherIcon);
         // * The temperature
+        let temp = $("<p>");
+        temp.text("Temp: " + response.list[i].main.temp.toFixed(2) + " °C");
+        forecastDayContainer.append(temp);
         // * The humidity
+        let hum = $("<p>");
+        hum.text("Humidity: " + response.list[i].main.humidity + " %");
+        forecastDayContainer.append(hum);
+        // * The wind speed
+        let wind = $("<p>");
+        wind.text("Wind: " + response.list[i].wind.speed);
+        forecastDayContainer.append(wind);
+
+        // Formatting the containers
+        // Pushing everything into the daily containers
+        forecastContainer.append(forecastDayContainer);
         forecast.append(forecastContainer);
       }
     });
   });
 });
 
+("2023-01-31 18:00:00");
+("YYYY-MM-DD HH:mm:ss");
 //? When a user clicks on a city in the search history they are again presented with current and future conditions for that city.
 
 //? When a user searches for a city they are presented with current and future conditions for that city and that city is added to the search history.
